@@ -1,6 +1,5 @@
 import { createContext, useState } from 'react';
-import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import useAuth from '../hooks/useAuth';
+import { Outlet } from 'react-router-dom';
 
 type User = {
   _id: string;
@@ -16,7 +15,7 @@ interface AuthContextType {
 
 export const AuthContext = createContext<AuthContextType>(null!);
 
-export function AuthProvider() {
+export default function AuthProvider() {
   const [user, setUser] = useState<User>(null!);
   const checkAuth = () => {};
 
@@ -29,16 +28,5 @@ export function AuthProvider() {
     <AuthContext.Provider value={authProviderValue}>
       <Outlet />
     </AuthContext.Provider>
-  );
-}
-
-export function PrivateRoute() {
-  const { user } = useAuth();
-  const location = useLocation();
-
-  return user?._id ? (
-    <Outlet />
-  ) : (
-    <Navigate to='/entry' state={{ from: location }} replace />
   );
 }
