@@ -1,24 +1,33 @@
+import { lazy, Suspense } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+import AppLoading from './components/app-loading';
+import GuestRoute from './components/guest-route';
 import UserRoute from './components/user-route';
 import AuthProvider from './context/auth-context';
-import Entry from './pages/entry';
-import Home from './pages/home';
-import NotFound from './pages/not-found';
-import Profile from './pages/profile';
+
+const Entry = lazy(() => import('./pages/entry'));
+const Home = lazy(() => import('./pages/home'));
+const NotFound = lazy(() => import('./pages/not-found'));
+const Profile = lazy(() => import('./pages/profile'));
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<AuthProvider />}>
-          <Route element={<UserRoute />}>
-            <Route index element={<Home />} />
-            <Route path='profile' element={<Profile />} />
+      <Suspense fallback={<AppLoading />}>
+        <Routes>
+          <Route path='/' element={<AuthProvider />}>
+            <Route element={<UserRoute />}>
+              <Route index element={<Home />} />
+              <Route path='profile' element={<Profile />} />
+            </Route>
+            <Route element={<GuestRoute />}>
+              <Route path='entry' element={<Entry />} />
+            </Route>
           </Route>
-          <Route path='entry' element={<Entry />} />
-        </Route>
-        <Route path='*' element={<NotFound />} />
-      </Routes>
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }

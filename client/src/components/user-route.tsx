@@ -3,20 +3,15 @@ import useAuth from '../hooks/useAuth';
 import UserLayout from './user-layout';
 
 export default function UserRoute() {
-  const { user } = useAuth();
+  const { isLoggedIn } = useAuth();
   const location = useLocation();
+
+  if (!isLoggedIn)
+    return <Navigate to='/entry' state={{ from: location }} replace />;
 
   return (
     <UserLayout>
       <Outlet />
     </UserLayout>
   );
-
-  // return user?._id ? (
-  //   <UserLayout>
-  //     <Outlet />
-  //   </UserLayout>
-  // ) : (
-  //   <Navigate to='/entry' state={{ from: location }} replace />
-  // );
 }

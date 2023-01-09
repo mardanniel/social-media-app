@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div className='grid grid-cols-[30%_35%_30%] justify-center gap-2 p-2'>
       <div className='relative'>
-        <div className='fixed top-14 left-0'>
+        <div className='fixed top-14 left-0 p-2'>
           <UserDetails />
         </div>
       </div>
@@ -16,7 +16,7 @@ export default function Home() {
         <PostList postOwnership='random'/>
       </div>
       <div className='relative'>
-        <div className='fixed top-14 right-0'>
+        <div className='fixed top-14 right-0 p-2'>
           <UserFriends />
         </div>
       </div>

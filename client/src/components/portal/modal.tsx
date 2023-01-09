@@ -12,7 +12,7 @@ export default function Modal({ visible, handleClose, children }: ModalProps) {
   if (!visible) return null;
   return (
     <Portal portalElementID='modal-portal'>
-      <div className='modal fixed inset-0 flex items-center justify-center bg-slate-900'>
+      <div className='modal fixed inset-0 flex items-center justify-center bg-gray-800/75'>
         <div className='rounded-md flex flex-col p-4'>
           <div className='flex justify-end'>
             <button className='modal__close-btn' onClick={() => handleClose()}>

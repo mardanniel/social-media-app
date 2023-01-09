@@ -1,22 +1,28 @@
+import { useContext } from 'react';
 import { HiOutlineUserCircle } from 'react-icons/hi';
 import PostCreate from '../components/post-create';
 import PostList from '../components/post-list';
 import UserDetails from '../components/user-details';
+import { AuthContext } from '../context/auth-context';
 
 export default function Profile() {
+  const { user } = useContext(AuthContext);
+
   return (
-    <div className='flex flex-col items-center h-auto p-4'>
-      <div className='bg-zinc-900 w-full rounded-lg flex flex-col items-center justify-center'>
-        <div className='bg-zinc-800 w-full flex flex-col items-center border-b border-zinc-600 rounded-t-lg'>
-          <HiOutlineUserCircle size={150} className='mt-14 -mb-10' />
+    <div className='flex justify-center'>
+      <div className='flex flex-col items-center w-2/3'>
+        <div className='w-full bg-zinc-900 flex items-center justify-start gap-4 p-4 rounded-lg mt-2'>
+          <HiOutlineUserCircle size={100} />
+          <div className='text-4xl font-bold'>{`${user.firstName} ${user.lastName}`}</div>
         </div>
-        <div className='m-8 text-3xl font-bold'>Hello World</div>
-      </div>
-      <div className='flex'>
-        <UserDetails />
-        <div className='flex flex-col mt-2'>
-          <PostCreate />
-          <PostList postOwnership='user'/>
+        <div className='w-full flex'>
+          <div className='grow pt-2 pr-2'>
+            <UserDetails />
+          </div>
+          <div className='grow flex flex-col mt-2'>
+            <PostCreate />
+            <PostList postOwnership='user' />
+          </div>
         </div>
       </div>
     </div>

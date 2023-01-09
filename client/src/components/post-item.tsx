@@ -16,8 +16,8 @@ export default function PostItem() {
         </div>
         <SlOptions />
       </div>
-      <div className='bg-zinc-800'>
-        <img src='sample-post.PNG' />
+      <div className='bg-zinc-800 flex justify-center'>
+        <img src='sample-post.PNG' className='w-auto h-full'/>
       </div>
       <div className='flex flex-col p-2'>
         <div className='flex justify-between px-2'>

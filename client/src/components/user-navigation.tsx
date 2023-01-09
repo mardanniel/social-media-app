@@ -1,13 +1,14 @@
 import React from 'react';
 import { HiOutlineUserCircle } from 'react-icons/hi';
 import { IoNotifications } from 'react-icons/io5';
+import { Link } from 'react-router-dom';
 
 export default function UserNavigation() {
   return (
     <div className='fixed top-0 left-0 right-0 bg-zinc-900'>
       <div className='grid grid-cols-3 gap-2 py-2 px-6 items-center h-14'>
         <div className='justify-self-start'>
-          <h1 className='font-bold text-3xl'>Socialx</h1>
+          <Link to={'/'} className='font-bold text-3xl'>Socialex</Link>
         </div>
         <div className='justify-self-center'>
           <input

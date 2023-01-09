@@ -1,11 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../context/auth-context';
-import { FormResult } from '../../shared/types';
+import useOnClickFetch from '../../hooks/useOnClickFetch';
 
 export default function Login() {
-  const [result, setResult] = useState<FormResult>(null!);
-  const [isLoading, setIsLoading] = useState(false);
+  const { result, isLoading, call } = useOnClickFetch();
   const { checkAuth } = useContext(AuthContext);
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -17,12 +20,17 @@ export default function Login() {
 
   const handleLogin = (event: React.FormEvent) => {
     event.preventDefault();
+    call(
+      {
+        method: 'POST',
+        url: '/api/auth/login',
+        data: formData,
+      },
+      (onSuccessResult) => {
+        checkAuth();
+      }
+    );
   };
-
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
 
   return (
     <form
@@ -30,7 +38,7 @@ export default function Login() {
       className='w-full flex flex-col items-center gap-4'
     >
       {result?.error?.general && (
-        <p className='mt-2 text-sm text-red-600 dark:text-red-500'>
+        <p className='mt-2 text-sm text-red-600'>
           <span className='font-medium'>{result?.error?.general?.msg}</span>
         </p>
       )}
@@ -39,17 +47,22 @@ export default function Login() {
         name='email'
         id='email'
         placeholder='Email or phone number'
-        className='w-full bg-[#181A1B] p-4 border border-gray-700 rounded-md'
+        className='w-full bg-zinc-800 p-4 border border-gray-700 rounded-md'
         onChange={handleInputChange}
         value={formData.email}
         required
       />
+      {result?.error?.email && (
+        <p className='text-sm text-red-600'>
+          <span className='font-medium'>{result?.error?.email?.msg}</span>
+        </p>
+      )}
       <input
         type='password'
         name='password'
         id='password'
         placeholder='Password'
-        className='w-full bg-[#181A1B] p-4 border border-gray-700 rounded-md'
+        className='w-full bg-zinc-800 p-4 border border-gray-700 rounded-md'
         onChange={handleInputChange}
         value={formData.password}
         required

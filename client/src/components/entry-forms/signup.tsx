@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { FormResult } from '../shared/types';
+import useOnClickFetch from '../../hooks/useOnClickFetch';
 
 type SignUpProps = {
   onSignUpSuccess: () => void;
 };
 
 export default function SignUp({ onSignUpSuccess }: SignUpProps) {
-  const [result, setResult] = useState<FormResult>(null!);
-  const [isLoading, setIsLoading] = useState(false);
+  const { result, isLoading, call } = useOnClickFetch();
 
   const [formData, setFormData] = useState({
     email: '',
@@ -19,6 +18,16 @@ export default function SignUp({ onSignUpSuccess }: SignUpProps) {
 
   const handleSignUp = async (event: React.FormEvent) => {
     event.preventDefault();
+    call(
+      {
+        method: 'POST',
+        url: '/api/auth/signup',
+        data: formData,
+      },
+      (onSuccessResult) => {
+        onSignUpSuccess();
+      }
+    );
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +53,7 @@ export default function SignUp({ onSignUpSuccess }: SignUpProps) {
           <div>
             <input
               type='text'
-              className='bg-[#1F2223] p-2 border border-gray-700 rounded-md'
+              className='bg-zinc-800 p-2 border border-gray-700 rounded-md'
               placeholder='First Name'
               name='firstName'
               value={formData.firstName}
@@ -62,7 +71,7 @@ export default function SignUp({ onSignUpSuccess }: SignUpProps) {
           <div>
             <input
               type='text'
-              className='bg-[#1F2223] p-2 border border-gray-700 rounded-md'
+              className='bg-zinc-800 p-2 border border-gray-700 rounded-md'
               placeholder='Last Name'
               name='lastName'
               value={formData.lastName}
@@ -81,7 +90,7 @@ export default function SignUp({ onSignUpSuccess }: SignUpProps) {
         <div className='w-full'>
           <input
             type='text'
-            className='w-full bg-[#1F2223] p-2 border border-gray-700 rounded-md'
+            className='w-full bg-zinc-800 p-2 border border-gray-700 rounded-md'
             placeholder='Email'
             name='email'
             value={formData.email}
@@ -97,7 +106,7 @@ export default function SignUp({ onSignUpSuccess }: SignUpProps) {
         <div className='w-full'>
           <input
             type='password'
-            className='w-full bg-[#1F2223] p-2 border border-gray-700 rounded-md'
+            className='w-full bg-zinc-800 p-2 border border-gray-700 rounded-md'
             placeholder='Password'
             name='password'
             value={formData.password}
@@ -113,7 +122,7 @@ export default function SignUp({ onSignUpSuccess }: SignUpProps) {
         <div className='w-full'>
           <input
             type='password'
-            className='w-full bg-[#1F2223] p-2 border border-gray-700 rounded-md'
+            className='w-full bg-zinc-800 p-2 border border-gray-700 rounded-md'
             placeholder='Confirm Password'
             name='passwordConfirm'
             value={formData.passwordConfirm}
