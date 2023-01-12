@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Login from '../components/entry-forms/login';
 import SignUp from '../components/entry-forms/signup';
-import Modal from '../components/portal/modal';
+import Modal from '../components/dialogs/modal';
 import PageWrapper from '../components/wrapper/page-wrapper';
 
 export default function Entry() {

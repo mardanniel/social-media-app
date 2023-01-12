@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axiosInstance from '../shared/config/axios';
+import { axiosInstance } from '../shared/config/axios';
 import { FetchData, FormResult } from '../shared/types';
 
 export default function useOnClickFetch() {
@@ -13,11 +13,16 @@ export default function useOnClickFetch() {
     setResult(null!);
     setIsLoading(true);
 
-    await axiosInstance({
+    let config = {
       method: callData.method,
       url: callData.url,
-      data: JSON.stringify(callData.data),
-    })
+    };
+
+    if (callData.data) {
+      Object.assign(config, { data: JSON.stringify(callData.data) });
+    }
+
+    await axiosInstance(config)
       .then((response) => {
         if (response.data?.success) {
           setResult(response.data);

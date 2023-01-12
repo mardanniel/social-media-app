@@ -1,7 +1,8 @@
-import PostCreate from '../components/post-create';
-import PostList from '../components/post-list';
-import UserDetails from '../components/user-details';
-import UserFriends from '../components/user-friends';
+import PostCreate from '../components/post/post-create';
+import PostList from '../components/post/post-list';
+import UserDetails from '../components/user/user-details';
+import UserFriends from '../components/user/user-friends';
+import UserTimeline from '../components/user/user-timeline';
 
 export default function Home() {
   return (
@@ -12,8 +13,7 @@ export default function Home() {
         </div>
       </div>
       <div className='flex flex-col'>
-        <PostCreate />
-        <PostList postOwnership='random'/>
+        <UserTimeline />
       </div>
       <div className='relative'>
         <div className='fixed top-14 right-0 p-2'>

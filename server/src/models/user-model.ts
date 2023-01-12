@@ -69,20 +69,18 @@ const userSchema = new Schema<IUser>(
         },
         'Please provide a strong password',
       ],
-      required: [true, 'Please specify a valid password.']
+      required: [true, 'Please specify a valid password.'],
     },
     avatar: { type: String, default: 'default.png' },
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now },
   },
-  {
-    methods: {
-      validPassword: function (reqPassword: string) {
-        return bcrypt.compareSync(reqPassword, this.password);
-      },
-    },
-  }
+  { timestamps: true }
 );
+
+userSchema.methods = {
+  validPassword: function (reqPassword: string) {
+    return bcrypt.compareSync(reqPassword, this.password);
+  },
+};
 
 userSchema
   .virtual('passwordConfirm')
@@ -95,7 +93,10 @@ userSchema
 
 userSchema.pre('validate', function (next) {
   if (this.password !== this.passwordConfirm) {
-    this.invalidate('passwordConfirm', 'Password confirmation must match password.');
+    this.invalidate(
+      'passwordConfirm',
+      'Password confirmation must match password.'
+    );
   }
   next();
 });

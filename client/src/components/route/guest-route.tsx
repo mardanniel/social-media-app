@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { AuthContext } from '../context/auth-context';
+import { AuthContext } from '../../context/auth-context';
 
 export default function GuestRoute() {
   const { isLoggedIn } = useContext(AuthContext);

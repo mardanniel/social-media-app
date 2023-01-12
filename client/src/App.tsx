@@ -2,8 +2,8 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import AppLoading from './components/app-loading';
-import GuestRoute from './components/guest-route';
-import UserRoute from './components/user-route';
+import GuestRoute from './components/route/guest-route';
+import UserRoute from './components/route/user-route';
 import AuthProvider from './context/auth-context';
 
 const Entry = lazy(() => import('./pages/entry'));

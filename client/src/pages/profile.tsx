@@ -1,8 +1,7 @@
 import { useContext } from 'react';
 import { HiOutlineUserCircle } from 'react-icons/hi';
-import PostCreate from '../components/post-create';
-import PostList from '../components/post-list';
-import UserDetails from '../components/user-details';
+import UserDetails from '../components/user/user-details';
+import UserTimeline from '../components/user-timeline';
 import { AuthContext } from '../context/auth-context';
 
 export default function Profile() {
@@ -20,8 +19,7 @@ export default function Profile() {
             <UserDetails />
           </div>
           <div className='grow flex flex-col mt-2'>
-            <PostCreate />
-            <PostList postOwnership='user' />
+            <UserTimeline />
           </div>
         </div>
       </div>

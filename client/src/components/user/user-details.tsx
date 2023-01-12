@@ -4,7 +4,7 @@ import { FaUserFriends } from 'react-icons/fa';
 import { HiOutlineMail, HiOutlineUserCircle } from 'react-icons/hi';
 import { MdAddReaction } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../context/auth-context';
+import { AuthContext } from '../../context/auth-context';
 
 export default function UserDetails() {
   const { user } = useContext(AuthContext);

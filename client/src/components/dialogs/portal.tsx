@@ -1,17 +1,11 @@
 import React, { createElement, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { createPortalElement } from '../../shared/helper/createPortalElement';
 
 type PortalProps = {
   children: React.ReactNode;
   portalElementID: string;
 };
-
-function createPortalElement(portalElementID = 'portal-element') {
-  let portalElement = document.createElement('div');
-  portalElement.setAttribute('id', portalElementID);
-  (document.getElementById('root') as HTMLElement).appendChild(portalElement);
-  return portalElement;
-}
 
 export default function Portal({
   children,

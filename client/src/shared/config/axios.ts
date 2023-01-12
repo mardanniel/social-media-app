@@ -1,10 +1,11 @@
 import axios from 'axios';
 
-const axiosInstance = axios.create({
+export const cancelTokenSource = axios.CancelToken.source();
+
+export const axiosInstance = axios.create({
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json'
-  }
+  },
+  cancelToken: cancelTokenSource.token
 })
-
-export default axiosInstance;

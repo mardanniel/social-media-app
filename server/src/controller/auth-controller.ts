@@ -106,13 +106,12 @@ authRouter.delete(
           },
         });
       }
-      return res.status(204).json;
-    });
 
-    return res.status(204).json({
-      success: {
-        msg: 'Logout Successful!',
-      },
+      return res.status(200).json({
+        success: {
+          msg: 'Logout Successful!',
+        },
+      });
     });
   }
 );

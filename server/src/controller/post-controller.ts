@@ -46,6 +46,12 @@ postRouter.get(
           },
         },
         {
+          $unwind: {
+            path: '$reaction_details',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
           $project: {
             _id: 1,
             context: 1,
@@ -53,12 +59,9 @@ postRouter.get(
             creator: 1,
             createdAt: 1,
             updatedAt: 1,
-            reaction_details: {
-              total_reactions: 1,
-              did_react: 1,
-            },
+            reaction_details: 1,
           },
-        }
+        },
       ],
       (aggregateError, result) => {
         if (aggregateError)

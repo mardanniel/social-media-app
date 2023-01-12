@@ -8,23 +8,24 @@ export interface IPost extends Document {
   updatedAt: Date;
 }
 
-const postSchema = new Schema<IPost>({
-  context: {
-    type: String,
-    validate: [
-      (context: string) => {
-        let contextValidation: RegExp = /^(.|\s)*[a-zA-Z]+(.|\s)*$/;
-        return contextValidation.test(context);
-      },
-      'Please provide a valid context.',
-    ],
-    required: [true, 'Please specify a post context.'],
+const postSchema = new Schema<IPost>(
+  {
+    context: {
+      type: String,
+      validate: [
+        (context: string) => {
+          let contextValidation: RegExp = /^(.|\s)*[a-zA-Z]+(.|\s)*$/;
+          return contextValidation.test(context);
+        },
+        'Please provide a valid context.',
+      ],
+      required: [true, 'Please specify a post context.'],
+    },
+    image: { type: String, default: '' },
+    creator: { type: Types.ObjectId, ref: 'user' },
   },
-  image: { type: String, default: '' },
-  creator: { type: Types.ObjectId, ref: 'user' },
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
-});
+  { timestamps: true }
+);
 
 const PostModel = model<IPost>('post', postSchema);
 

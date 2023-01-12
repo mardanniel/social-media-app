@@ -8,13 +8,14 @@ export interface IComment extends Document {
   updatedAt: Date;
 }
 
-const commentSchema = new Schema<IComment>({
-  content: { type: String },
-  user: { type: Types.ObjectId, ref: 'user' },
-  post: { type: Types.ObjectId, ref: 'post' },
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
-});
+const commentSchema = new Schema<IComment>(
+  {
+    content: { type: String },
+    user: { type: Types.ObjectId, ref: 'user' },
+    post: { type: Types.ObjectId, ref: 'post' },
+  },
+  { timestamps: true }
+);
 
 const CommentModel = model<IComment>('comment', commentSchema);
 
