@@ -44,7 +44,6 @@ export default function PostReaction({
         <div className='flex gap-1 items-center'>
           <MdAddReaction
             size={20}
-            onClick={() => console.log(reactionDetails)}
           />
           <div>{reactionState.count}</div>
         </div>
@@ -78,7 +77,6 @@ function PostReactionHandler({
   const { user } = useContext(AuthContext);
 
   const handleOnReact = () => {
-    console.log(reactionState?.did_react);
     let config: FetchData = reactionState?.did_react
       ? {
           url: 'api/reaction/delete',
