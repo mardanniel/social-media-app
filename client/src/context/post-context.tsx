@@ -35,10 +35,10 @@ export function PostProvider({ children }: React.PropsWithChildren) {
   };
 
   // Appending Post
-  const insertPost = (...post: Post[]) => {
-    // setPosts((prevPosts) => [...prevPosts, ...post]);
+  const insertPost = (...posts: Post[]) => {
+    // setPosts((prevPosts) => [...prevPosts, ...posts]);
     setPosts((prevPosts) => {
-      let newPosts = post.filter(
+      let newPosts = posts.filter(
         (post, postIndex) =>
           prevPosts.findIndex(
             (prevPost, prevPostIndex) => prevPost._id === post._id
