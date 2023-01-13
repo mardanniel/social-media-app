@@ -49,7 +49,6 @@ function UserOption() {
         method: 'DELETE',
       },
       (successResult) => {
-        console.log(successResult)
         checkAuth();
       }
     );
