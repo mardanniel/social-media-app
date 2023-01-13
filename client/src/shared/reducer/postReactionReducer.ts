@@ -1,31 +1,29 @@
-export type ReactionState = {
-  did_react: boolean
-  count: number;
-};
+import {
+  PostReactionDetails,
+  ReactionAction,
+  ReactionState,
+  ReactionType,
+} from '../types';
 
-export enum ReactionType {
-  LIKE = 2,
-  NO_REACTION,
-}
-
-export type ReactionAction = {
-  type: ReactionType;
-};
-
-export const initialReactionState = {
-  did_react: false,
+export const initialReactionState: ReactionState = {
   count: 0,
+  did_react: null!,
 };
 
 export function postReactionReducer(
   state: ReactionState,
-  action: ReactionAction
+  action: ReactionAction & PostReactionDetails
 ) {
   switch (action.type) {
+    case ReactionType.SET:
+      return {
+        did_react: action.did_react,
+        count: action.total_reactions?.count ?? 0,
+      };
     case ReactionType.LIKE:
-      return { did_react: true, count: state.count + 1 };
+      return { did_react: action.info, count: state.count + 1 };
     case ReactionType.NO_REACTION:
-      return { did_react: false, count: state.count - 1 };
+      return { did_react: undefined, count: state.count - 1 };
     default:
       return state;
   }

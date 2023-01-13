@@ -39,8 +39,39 @@ export type PostReactionDetails = {
   };
   did_react?: {
     _id: string;
-    reaction: Reaction;
+    reaction: ReactionType;
     user: string;
     post: string;
   };
+};
+
+export enum ReactionType {
+  SET = 1,
+  LIKE = 2,
+  LAUGH = 3,
+  HEART = 4,
+  CARE = 5,
+  SAD = 6,
+  ANGRY = 7,
+  NO_REACTION = 8,
+}
+
+export type ReactionAction = {
+  type: ReactionType;
+  info?: {
+    _id: string;
+    reaction: ReactionType;
+    user: string;
+    post: string;
+  };
+};
+
+export type ReactionState = {
+  did_react?: {
+    _id: string;
+    reaction: ReactionType;
+    user: string;
+    post: string;
+  };
+  count: number;
 };

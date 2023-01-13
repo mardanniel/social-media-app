@@ -13,7 +13,12 @@ reactionRouter.post('/add', (req: Request, res: Response) => {
     },
     (error, createdReaction) => {
       if (error) return res.status(404).json({ error: error });
-      return res.json({ success: createdReaction });
+      return res.json({
+        success: {
+          reaction_info: createdReaction,
+          reaction_type: 2,
+        },
+      });
     }
   );
 });
@@ -31,7 +36,12 @@ reactionRouter.delete('/delete', (req: Request, res: Response) => {
             msg: 'Reaction not deleted.',
           },
         });
-      return res.json({ success: deletedReaction });
+      return res.json({
+        success: {
+          reaction_info: deletedReaction,
+          reaction_type: 8,
+        },
+      });
     }
   );
 });

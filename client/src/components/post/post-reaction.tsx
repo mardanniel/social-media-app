@@ -1,4 +1,4 @@
-import { useContext, useReducer } from 'react';
+import { useContext, useEffect, useReducer } from 'react';
 import { BsHeart } from 'react-icons/bs';
 import { MdAddReaction, MdComment } from 'react-icons/md';
 import { AuthContext } from '../../context/auth-context';
@@ -6,11 +6,14 @@ import useOnClickFetch from '../../hooks/useOnClickFetch';
 import {
   initialReactionState,
   postReactionReducer,
+} from '../../shared/reducer/postReactionReducer';
+import {
+  FetchData,
+  PostReactionDetails,
   ReactionAction,
   ReactionState,
   ReactionType,
-} from '../../shared/reducer/postReactionReducer';
-import { FetchData, PostReactionDetails } from '../../shared/types';
+} from '../../shared/types';
 
 export default function PostReaction({
   postID,
@@ -19,23 +22,30 @@ export default function PostReaction({
   postID: string;
   reactionDetails?: PostReactionDetails;
 }) {
-  initialReactionState.count = reactionDetails?.total_reactions?.count ?? 0;
-  initialReactionState.did_react = reactionDetails?.did_react !== undefined;
-
   const [reactionState, dispatch] = useReducer(
     postReactionReducer,
     initialReactionState
   );
 
-  const handleOnReact = () => {
-    console.log('hello');
-  };
+  /**
+   * This is kinda messed up but it works i guess
+   */
+  useEffect(() => {
+    dispatch({
+      type: ReactionType.SET,
+      did_react: reactionDetails?.did_react,
+      total_reactions: reactionDetails?.total_reactions,
+    });
+  }, []);
 
   return (
     <div className='flex flex-col p-2'>
       <div className='flex justify-between px-2'>
         <div className='flex gap-1 items-center'>
-          <MdAddReaction size={20} />
+          <MdAddReaction
+            size={20}
+            onClick={() => console.log(reactionDetails)}
+          />
           <div>{reactionState.count}</div>
         </div>
         <div className='flex gap-1 items-center'>
@@ -64,25 +74,34 @@ function PostReactionHandler({
   reactionState: ReactionState;
   reactionDispatch: React.Dispatch<ReactionAction>;
 }) {
-  const { isLoading, result, call } = useOnClickFetch();
+  const { isLoading, call } = useOnClickFetch();
   const { user } = useContext(AuthContext);
 
   const handleOnReact = () => {
-    
-
-    let config: FetchData = {
-      url: 'api/reaction/add',
-      method: 'POST',
-      data: {
-        reaction: 2,
-        userID: user._id,
-        postID: postID,
-      },
-    };
+    console.log(reactionState?.did_react);
+    let config: FetchData = reactionState?.did_react
+      ? {
+          url: 'api/reaction/delete',
+          method: 'DELETE',
+          data: {
+            reactionID: reactionState.did_react._id,
+          },
+        }
+      : {
+          url: 'api/reaction/add',
+          method: 'POST',
+          data: {
+            reaction: 2,
+            userID: user._id,
+            postID: postID,
+          },
+        };
 
     call(config, (successResult) => {
-      console.log(successResult.success.reaction);
-      reactionDispatch({ type: ReactionType.LIKE });
+      reactionDispatch({
+        type: successResult.success.reaction_type,
+        info: successResult.success.reaction_info,
+      });
     });
   };
 
@@ -92,7 +111,7 @@ function PostReactionHandler({
       onClick={handleOnReact}
       className='flex gap-1 items-center justify-center'
     >
-      <BsHeart fill={reactionState.did_react ? 'red' : 'white'} />
+      <BsHeart fill={reactionState?.did_react ? 'red' : 'white'} />
       <span>Like</span>
     </button>
   );
