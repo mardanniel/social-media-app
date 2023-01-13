@@ -8,7 +8,7 @@ export default function useOnClickFetch() {
 
   const call = async (
     callData: FetchData,
-    onSuccess: (successResult: any) => void
+    onSuccess?: (successResult: any) => void
   ) => {
     setResult(null!);
     setIsLoading(true);
@@ -26,7 +26,7 @@ export default function useOnClickFetch() {
       .then((response) => {
         if (response.data?.success) {
           setResult(response.data);
-          onSuccess(response.data);
+          onSuccess?.(response.data);
         }
       })
       .catch((error) => {
