@@ -9,6 +9,7 @@ import {
 import { SlOptions } from 'react-icons/sl';
 import { PostContext } from '../../context/post-context';
 import useOnClickFetch from '../../hooks/useOnClickFetch';
+import { getTimeAndDate } from '../../shared/helper/time';
 import { Post } from '../../shared/types';
 import Dropdown from '../dialogs/dropdown';
 import Modal from '../dialogs/modal';
@@ -26,7 +27,7 @@ export default function PostItem({ post }: { post: Post }) {
             <HiOutlineUserCircle size={40} />
             <div className='flex flex-col'>
               <div>{`${creator?.firstName} ${creator?.lastName}`}</div>
-              <div className='text-sm'>{createdAt}</div>
+              <div className='text-sm'>{`${getTimeAndDate(createdAt)} ${createdAt === updatedAt ? '' : '(edited)'}`}</div>
             </div>
           </div>
           <PostItemOption post={post} />
