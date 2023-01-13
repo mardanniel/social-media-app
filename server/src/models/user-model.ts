@@ -6,6 +6,7 @@ export interface IUser extends Document {
   firstName: string;
   lastName: string;
   password: string;
+  _passwordConfirm: string;
   avatar: string;
   createdAt: Date;
   updatedAt: Date;
@@ -85,14 +86,14 @@ userSchema.methods = {
 userSchema
   .virtual('passwordConfirm')
   .get(function () {
-    return this._passwordConfirmation;
+    return this._passwordConfirm;
   })
   .set(function (value) {
-    this._passwordConfirmation = value;
+    this._passwordConfirm = value;
   });
 
 userSchema.pre('validate', function (next) {
-  if (this.password !== this.passwordConfirm) {
+  if (this.password !== this._passwordConfirm) {
     this.invalidate(
       'passwordConfirm',
       'Password confirmation must match password.'
