@@ -2,11 +2,7 @@ import express, { Request, Response } from 'express';
 import { paginationValues } from '../middleware/paginationValues';
 import { upsertPostsValidation } from '../middleware/validation/upsertPostValidation';
 import PostModel from '../models/post-model';
-
-type PaginationQueryString = {
-  page: number;
-  perPage: number;
-};
+import { PaginationQueryString } from '../shared/types';
 
 const postRouter = express.Router();
 
@@ -85,6 +81,7 @@ postRouter.get(
                   error: error,
                 },
               });
+              
             return res.status(200).json({
               success: posts,
             });
