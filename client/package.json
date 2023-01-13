@@ -13,7 +13,8 @@
     "axios": "^1.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.6.1"
+    "react-router-dom": "^6.6.1",
+    "socialex-server": "file:../server"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",

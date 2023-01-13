@@ -5,8 +5,8 @@
   "main": "src/index.ts",
   "type": "module",
   "scripts": {
-    "build-client": "npm --prefix ../client run build",
-    "build-server": "npx tsc",
+    "build-client": "npm --prefix ../client install && npm --prefix ../client run build",
+    "build-server": "npm install && npx tsc",
     "start": "node --experimental-specifier-resolution=node dist/index.js",
     "seed": "npx ts-node --swc src/db/seeder.ts",
     "dev": "nodemon"
