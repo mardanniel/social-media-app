@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { HiOutlineUserCircle } from 'react-icons/hi';
 import UserDetails from '../components/user/user-details';
-import UserTimeline from '../components/user-timeline';
+import UserTimeline from '../components/user/user-timeline';
 import { AuthContext } from '../context/auth-context';
 
 export default function Profile() {
