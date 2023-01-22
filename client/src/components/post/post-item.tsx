@@ -8,7 +8,7 @@ import {
 } from 'react-icons/md';
 import { SlOptions } from 'react-icons/sl';
 import { PostContext } from '../../context/post-context';
-import useOnClickFetch from '../../hooks/useOnClickFetch';
+import useOnCallFetch from '../../hooks/useOnCallFetch';
 import { getTimeAndDate } from '../../shared/helper/time';
 import { Post } from '../../shared/types';
 import Dropdown from '../dialogs/dropdown';
@@ -22,7 +22,7 @@ export default function PostItem({ post }: { post: Post }) {
   return (
     <li className='bg-zinc-900 rounded-lg mt-4 flex flex-col justify-center'>
       <div className='flex flex-col p-4'>
-        <div className='flex justify-between'>
+        <div className='flex gap-10 justify-between'>
           <div className='flex gap-2 items-center'>
             <HiOutlineUserCircle size={40} />
             <div className='flex flex-col'>
@@ -116,7 +116,7 @@ const PostItemEditPrompt = ({
   onEditClosePrompt?: () => void;
 }) => {
   const { updatePost } = useContext(PostContext);
-  const { isLoading, result, call } = useOnClickFetch();
+  const { isLoading, result, call } = useOnCallFetch();
   const [postInput, setPostInput] = useState(post.context);
   const [postBtnVisibility, setPostBtnVisibility] = useState(false);
 
@@ -192,7 +192,7 @@ const PostItemDeletePrompt = ({
   onDeleteClosePrompt?: () => void;
 }) => {
   const { removePost } = useContext(PostContext);
-  const { isLoading, call } = useOnClickFetch();
+  const { isLoading, call } = useOnCallFetch();
 
   const handleDeletePost = (event: React.MouseEvent) => {
     call(

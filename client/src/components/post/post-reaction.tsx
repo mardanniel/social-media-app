@@ -2,7 +2,7 @@ import { useContext, useEffect, useReducer } from 'react';
 import { BsHeart } from 'react-icons/bs';
 import { MdAddReaction, MdComment } from 'react-icons/md';
 import { AuthContext } from '../../context/auth-context';
-import useOnClickFetch from '../../hooks/useOnClickFetch';
+import useOnCallFetch from '../../hooks/useOnCallFetch';
 import {
   initialReactionState,
   postReactionReducer,
@@ -73,20 +73,20 @@ function PostReactionHandler({
   reactionState: ReactionState;
   reactionDispatch: React.Dispatch<ReactionAction>;
 }) {
-  const { isLoading, call } = useOnClickFetch();
+  const { isLoading, call } = useOnCallFetch();
   const { user } = useContext(AuthContext);
 
   const handleOnReact = () => {
     let config: FetchData = reactionState?.did_react
       ? {
-          url: 'api/reaction/delete',
+          url: '/api/reaction/delete',
           method: 'DELETE',
           data: {
             reactionID: reactionState.did_react._id,
           },
         }
       : {
-          url: 'api/reaction/add',
+          url: '/api/reaction/add',
           method: 'POST',
           data: {
             reaction: 2,

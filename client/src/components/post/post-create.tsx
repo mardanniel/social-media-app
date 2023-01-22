@@ -3,12 +3,12 @@ import { BiPhotoAlbum } from 'react-icons/bi';
 import { HiOutlineUserCircle } from 'react-icons/hi';
 import { MdAddReaction } from 'react-icons/md';
 import { PostContext } from '../../context/post-context';
-import useOnClickFetch from '../../hooks/useOnClickFetch';
+import useOnCallFetch from '../../hooks/useOnCallFetch';
 import { Post } from '../../shared/types';
 
 export default function PostCreate() {
   const { unshiftPost } = useContext(PostContext);
-  const { result, isLoading, call } = useOnClickFetch();
+  const { result, isLoading, call } = useOnCallFetch();
 
   const [postInput, setPostInput] = useState('');
   const [postBtnVisibility, setPostBtnVisibility] = useState(false);

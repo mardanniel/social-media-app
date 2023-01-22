@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FaUserFriends } from 'react-icons/fa';
 import { HiOutlineUserCircle } from 'react-icons/hi';
-import useOnClickFetch from '../../hooks/useOnClickFetch';
+import useOnCallFetch from '../../hooks/useOnCallFetch';
 
 type Friend = {
   _id: string;
@@ -16,12 +16,12 @@ type Friend = {
 export default function UserFriends() {
   const [friends, setFriends] = useState<Friend[]>([]);
 
-  const { isLoading, call } = useOnClickFetch();
+  const { isLoading, call } = useOnCallFetch();
 
   useEffect(() => {
     call(
       {
-        url: 'api/friendship?page=1&perPage=10',
+        url: '/api/friendship?page=1&perPage=10',
         method: 'GET',
       },
       (successResult) => {

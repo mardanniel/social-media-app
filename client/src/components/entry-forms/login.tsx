@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../context/auth-context';
-import useOnClickFetch from '../../hooks/useOnClickFetch';
+import useOnCallFetch from '../../hooks/useOnCallFetch';
 
 export default function Login() {
-  const { result, isLoading, call } = useOnClickFetch();
+  const { result, isLoading, call } = useOnCallFetch();
   const { checkAuth } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     email: '',

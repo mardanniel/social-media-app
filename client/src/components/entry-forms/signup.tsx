@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import useOnClickFetch from '../../hooks/useOnClickFetch';
+import useOnCallFetch from '../../hooks/useOnCallFetch';
 
 type SignUpProps = {
   onSignUpSuccess: () => void;
 };
 
 export default function SignUp({ onSignUpSuccess }: SignUpProps) {
-  const { result, isLoading, call } = useOnClickFetch();
+  const { result, isLoading, call } = useOnCallFetch();
 
   const [formData, setFormData] = useState({
     email: '',

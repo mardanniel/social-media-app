@@ -4,9 +4,10 @@ import { HiOutlineUserCircle } from 'react-icons/hi';
 import { IoNotifications } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/auth-context';
-import useOnClickFetch from '../../hooks/useOnClickFetch';
+import useOnCallFetch from '../../hooks/useOnCallFetch';
 import Dropdown from '../dialogs/dropdown';
 import Modal from '../dialogs/modal';
+import UserSearch from './user-search';
 
 export default function UserNavigation() {
   return (
@@ -17,13 +18,7 @@ export default function UserNavigation() {
             Socialex
           </Link>
         </div>
-        <div className='justify-self-center'>
-          <input
-            className='bg-zinc-800 text-white py-2 px-4 rounded-full w-96'
-            type='text'
-            placeholder='Search'
-          />
-        </div>
+        <UserSearch />
         <div className='justify-self-end'>
           <ul className='flex gap-2'>
             <li className='bg-zinc-800 rounded-full p-2'>
@@ -39,13 +34,13 @@ export default function UserNavigation() {
 
 function UserOption() {
   const [modalVisibility, setModalVisibility] = useState(false);
-  const { isLoading, result, call } = useOnClickFetch();
+  const { isLoading, result, call } = useOnCallFetch();
   const { checkAuth } = useContext(AuthContext);
 
   const handleSignOut = () => {
     call(
       {
-        url: 'api/auth/logout',
+        url: '/api/auth/logout',
         method: 'DELETE',
       },
       (successResult) => {
