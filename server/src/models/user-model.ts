@@ -63,7 +63,6 @@ const userSchema = new Schema<IUser>(
       type: String,
       validate: [
         (password: string) => {
-          // https://www.linkedin.com/pulse/create-strong-password-validation-regex-javascript-mitanshu-kumar/
           let validationRegex: RegExp =
             /^(?!.*\s)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?\/_₹]).{8,16}$/;
           return validationRegex.test(password);
@@ -91,6 +90,10 @@ userSchema
   .set(function (value) {
     this._passwordConfirm = value;
   });
+
+userSchema.virtual('fullName').get(function () {
+  return `${this.firstName} ${this.lastName}`;
+});
 
 userSchema.pre('validate', function (next) {
   if (this.password !== this._passwordConfirm) {
