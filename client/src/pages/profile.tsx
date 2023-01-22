@@ -1,27 +1,40 @@
-import { useContext } from 'react';
-import { HiOutlineUserCircle } from 'react-icons/hi';
+import React, { useEffect, useState } from 'react';
+import { BsFillFilePostFill } from 'react-icons/bs';
+import { FaUserFriends } from 'react-icons/fa';
+import { HiOutlineMail, HiOutlineUserCircle } from 'react-icons/hi';
+import { MdAddReaction } from 'react-icons/md';
+import { useParams } from 'react-router-dom';
 import UserDetails from '../components/user/user-details';
 import UserTimeline from '../components/user/user-timeline';
-import { AuthContext } from '../context/auth-context';
+import useOnCallFetch from '../hooks/useOnCallFetch';
+import { User } from '../shared/types';
 
 export default function Profile() {
-  const { user } = useContext(AuthContext);
+  const { userId } = useParams();
+  const { isLoading, call } = useOnCallFetch();
+  const [userProfile, setUserProfile] = useState<User>(null!);
+
+  useEffect(() => {
+    call(
+      {
+        url: `/api/user/${userId}`,
+        method: 'GET',
+      },
+      (successResult) => {
+        setUserProfile(successResult.success.user as User);
+      }
+    );
+  }, []);
+
+  if (!userProfile) return null;
 
   return (
-    <div className='flex justify-center'>
-      <div className='flex flex-col items-center w-2/3'>
-        <div className='w-full bg-zinc-900 flex items-center justify-start gap-4 p-4 rounded-lg mt-2'>
-          <HiOutlineUserCircle size={100} />
-          <div className='text-4xl font-bold'>{`${user.firstName} ${user.lastName}`}</div>
-        </div>
-        <div className='w-full flex'>
-          <div className='grow pt-2 pr-2'>
-            <UserDetails />
-          </div>
-          <div className='grow flex flex-col mt-2'>
-            <UserTimeline />
-          </div>
-        </div>
+    <div className='flex justify-center gap-8 p-2'>
+      <div>
+        <UserDetails user={userProfile} />
+      </div>
+      <div className='min-w-min'>
+        <UserTimeline />
       </div>
     </div>
   );
