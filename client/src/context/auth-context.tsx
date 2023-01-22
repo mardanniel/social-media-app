@@ -1,13 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { axiosInstance } from '../shared/config/axios';
-
-type User = {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-};
+import { User } from '../shared/types';
 
 interface AuthContextType {
   user: User;
@@ -49,7 +43,7 @@ export default function AuthProvider() {
     user,
     isLoggedIn,
     checkAuth,
-    isCheckingAuthUser
+    isCheckingAuthUser,
   };
 
   return (
