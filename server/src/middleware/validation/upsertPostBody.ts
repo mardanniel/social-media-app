@@ -2,11 +2,12 @@ import { NextFunction, Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
 import PostModel from '../../models/post-model';
 
-export const upsertPostsValidation = [
+export const upsertPostBody = [
   body('_id')
     .optional({ nullable: true, checkFalsy: true })
     .isMongoId()
     .withMessage('Post ID is not valid.')
+    .bail()
     .custom((_id) => {
       return PostModel.exists({ _id: _id })
         .then((postID) => {
