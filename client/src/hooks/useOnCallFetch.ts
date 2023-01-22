@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { axiosInstance } from '../shared/config/axios';
 import { FetchData, FormResult } from '../shared/types';
 
-export default function useOnClickFetch() {
+export default function useOnCallFetch() {
   const [result, setResult] = useState<FormResult>(null!);
   const [isLoading, setIsLoading] = useState(false);
 
   const call = async (
     callData: FetchData,
-    onSuccess?: (successResult: any) => void
+    onSuccess?: (successResult: any) => void,
+    onFail?: (errorResponse: any) => void
   ) => {
     setResult(null!);
     setIsLoading(true);
@@ -30,6 +31,7 @@ export default function useOnClickFetch() {
         }
       })
       .catch((error) => {
+        onFail?.(error.response.data);
         setResult(error.response.data);
       })
       .finally(() => {

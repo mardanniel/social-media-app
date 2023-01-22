@@ -11,7 +11,7 @@ export default function usePostsLoader() {
   const [pagination, setPagination] = useState({ page: 1, perPage: 10 });
 
   const fetchPosts = async () => {
-    setIsLoading(true);
+    setIsLoading(true); 
     setError(null!);
     await axiosInstance({
       url: `/api/post?page=${pagination.page}&perPage=${pagination.perPage}`,
