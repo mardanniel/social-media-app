@@ -1,4 +1,10 @@
-import { Reaction } from '../../context/post-context';
+export type User = {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  avatar?: string;
+};
 
 export type FetchData = {
   method: 'GET' | 'POST' | 'DELETE' | 'PUT' | 'PATCH';
