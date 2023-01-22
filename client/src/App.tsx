@@ -5,11 +5,12 @@ import AppLoading from './components/app-loading';
 import GuestRoute from './components/route/guest-route';
 import UserRoute from './components/route/user-route';
 import AuthProvider from './context/auth-context';
+import Profile from './pages/profile';
 
 const Entry = lazy(() => import('./pages/entry'));
 const Home = lazy(() => import('./pages/home'));
 const NotFound = lazy(() => import('./pages/not-found'));
-const Profile = lazy(() => import('./pages/profile'));
+const SearchedProfile = lazy(() => import('./pages/searched-profile'));
 
 function App() {
   return (
@@ -19,7 +20,12 @@ function App() {
           <Route path='/' element={<AuthProvider />}>
             <Route element={<UserRoute />}>
               <Route index element={<Home />} />
-              <Route path='profile' element={<Profile />} />
+              <Route path='profile' element={<SearchedProfile />} />
+              <Route
+                path='profile/:userId'
+                element={<Profile />}
+                errorElement={<NotFound />}
+              />
             </Route>
             <Route element={<GuestRoute />}>
               <Route path='entry' element={<Entry />} />
