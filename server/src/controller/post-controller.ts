@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
-import { paginationValues } from '../middleware/paginationValues';
-import { upsertPostsValidation } from '../middleware/validation/upsertPostValidation';
+import { paginationQuery } from '../middleware/validation/paginationQuery';
+import { upsertPostBody } from '../middleware/validation/upsertPostBody';
 import PostModel from '../models/post-model';
 import { PaginationQueryString } from '../shared/types';
 
@@ -8,11 +8,12 @@ const postRouter = express.Router();
 
 postRouter.get(
   '/',
-  paginationValues,
+  paginationQuery,
   (req: Request<{}, {}, {}, PaginationQueryString>, res: Response) => {
     let { perPage, page } = req.query;
     PostModel.aggregate(
       [
+        // { $match: { creator: { $ne: req.session.user?._id } } },
         { $match: { creator: req.session.user?._id } },
         { $sort: { createdAt: -1 } },
         { $skip: Number(perPage * (page - 1)) },
@@ -81,7 +82,7 @@ postRouter.get(
                   error: error,
                 },
               });
-              
+
             return res.status(200).json({
               success: posts,
             });
@@ -95,7 +96,7 @@ postRouter.get(
 
 postRouter.post(
   '/upsert',
-  upsertPostsValidation,
+  upsertPostBody,
   async (req: Request, res: Response) => {
     let { context, _id } = req.body;
 

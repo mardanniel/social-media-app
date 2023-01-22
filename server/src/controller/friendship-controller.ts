@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { paginationValues } from '../middleware/paginationValues';
+import { paginationQuery } from '../middleware/validation/paginationQuery';
 import FriendshipModel from '../models/friendship-model';
 import { PaginationQueryString } from '../shared/types';
 
@@ -7,7 +7,7 @@ const friendshipRouter = express.Router();
 
 friendshipRouter.get(
   '/',
-  paginationValues,
+  paginationQuery,
   (req: Request<{}, {}, {}, PaginationQueryString>, res: Response) => {
     let { perPage, page } = req.query;
 
